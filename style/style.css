@@ -1,0 +1,15 @@
+img {
+    width: 25px;
+}
+.screen {
+    border: 1px solid black;
+    width: 200px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+.scr-row {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid black;
+}
