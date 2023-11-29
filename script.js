@@ -17,8 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 let arr = expression.innerHTML.split(" ");
+                console.log(arr);
                 if(arr[arr.length-1].indexOf('.') == -1) {
-                    arr[arr.length-1] += '.';
+                    const dot = arr[arr.length-1].length == 0 ? "0." : ".";
+                    arr[arr.length-1] += dot;
                     expression.innerHTML = arr.join(" ");
                 }
                 return;
