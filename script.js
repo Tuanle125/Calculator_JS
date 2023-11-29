@@ -8,9 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", (e) => {
             const exp = expression.innerHTML;
             const key = e.target.innerHTML;
-            const lengh = expression.innerHTML.length;
+            const length = expression.innerHTML.length;
             const operator = getOperator(exp);
 
+            if(key == "."){
+                if(length == 0) {
+                    expression.innerHTML = "0.";
+                    return;
+                }
+                let arr = expression.innerHTML.split(" ");
+                if(arr[arr.length-1].indexOf('.') == -1) {
+                    arr[arr.length-1] += '.';
+                    expression.innerHTML = arr.join(" ");
+                }
+                return;
+            }
             if(key >= "0" && key <= "9") {
                 expression.innerHTML += e.target.innerHTML;
                 return;
@@ -21,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             if(key == "Del") {
-                const range = expression.innerHTML.charAt(lengh-1) == " " ? -3 : -1;
+                const range = expression.innerHTML.charAt(length-1) == " " ? -3 : -1;
                 expression.innerHTML = expression.innerHTML.slice(0, range);
                 result.innerHTML = "";
                 return;
@@ -34,13 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
     
-            if(isOperator(operator) && lengh != 0) {
+            if(isOperator(operator) && length != 0) {
                 const re = calculate(exp);
                 expression.innerHTML = "";
                 result.innerHTML = "";
                 expression.innerHTML = re + ` ${key} `;
             }
-            else if (lengh != 0) expression.innerHTML += ` ${key} `;
+            else if (length != 0) expression.innerHTML += ` ${key} `;
             
             
         });
