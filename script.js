@@ -3,38 +3,66 @@ const expression = document.querySelector("#expression");
 const result = document.querySelector("#result");
 
 document.addEventListener("DOMContentLoaded", () => {
+
     button.forEach((btn) => {
         btn.addEventListener("click", (e) => {
-            const text = e.target.innerHTML;
+            const exp = expression.innerHTML;
+            const key = e.target.innerHTML;
             const lengh = expression.innerHTML.length;
-            const ex = expression.innerHTML.charAt(lengh-2);
+            const operator = getOperator(exp);
 
-            if(text >= "0" && text <= "9") {
+            if(key >= "0" && key <= "9") {
                 expression.innerHTML += e.target.innerHTML;
                 return;
             }
-            if(text == "Clr") {
+            if(key == "Clr") {
                 expression.innerHTML = "";
                 result.innerHTML = "";
                 return;
             }
-            if(text == "Del") {
+            if(key == "Del") {
                 const range = expression.innerHTML.charAt(lengh-1) == " " ? -3 : -1;
                 expression.innerHTML = expression.innerHTML.slice(0, range);
                 result.innerHTML = "";
                 return;
             }
-            
-            
-            if (lengh != 0) {     
-                if( ex == "+" || ex == "-" || ex == "x" || ex == "/") {
-                    let arr = expression.innerHTML.split("");
-                    arr[lengh-2] = text;
-                    expression.innerHTML = arr.join("");
+            if(key == "=") {
+                if(isOperator(operator)) {
+                    result.innerHTML = calculate(exp);
                 }
-                else expression.innerHTML += ` ${text} `;
+                return;
             }
-
+            
+    
+            if(isOperator(operator) && lengh != 0) {
+                const re = calculate(exp);
+                expression.innerHTML = "";
+                result.innerHTML = "";
+                expression.innerHTML = re + ` ${key} `;
+            }
+            else if (lengh != 0) expression.innerHTML += ` ${key} `;
+            
+            
         });
     });
 });
+
+const isOperator = (op) => {
+    return op == "+" || op == "-" || op == "x" || op == "/";
+};
+const getOperator = (str) => {
+    let arr = str.split("");
+    for(let char of arr){
+        if(isOperator(char)) return char;
+    }
+};
+const calculate = (ex) => {
+    const arr = ex.split(" ");
+    switch (arr[1]) {
+        case '+': return Number(arr[0]) + Number(arr[2]);
+        case '-': return Number(arr[0]) - Number(arr[2]);
+        case 'x': return Number(arr[0]) * Number(arr[2]);
+        case '/': return Math.round((Number(arr[0]) / Number(arr[2])) * 100)/100;
+        default: return "Don't have operator";
+    }
+};
