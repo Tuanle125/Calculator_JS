@@ -58,11 +58,12 @@ const getOperator = (str) => {
 };
 const calculate = (ex) => {
     const arr = ex.split(" ");
+    console.log(Number(arr[0]) + " - "+ Number(arr[2]));
     switch (arr[1]) {
-        case '+': return Number(arr[0]) + Number(arr[2]);
-        case '-': return Number(arr[0]) - Number(arr[2]);
-        case 'x': return Number(arr[0]) * Number(arr[2]);
-        case '/': return Math.round((Number(arr[0]) / Number(arr[2])) * 100)/100;
+        case '+': return Math.round((Number(arr[0]) + Number(arr[2])) * 1000)/1000;
+        case '-': return Math.round((Number(arr[0]) - Number(arr[2])) * 1000)/1000;
+        case 'x': return Math.round((Number(arr[0]) * Number(arr[2])) * 1000)/1000;
+        case '/': return Math.round((Number(arr[0]) / Number(arr[2])) * 1000)/1000;
         default: return "Don't have operator";
     }
 };
